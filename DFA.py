@@ -24,19 +24,19 @@ class DFA:
                 })
 
             for index, state in enumerate(state_list):
-                if char in state:
-                    state_list[index] = state[char]
+                if char in state:  # 如果在字典中查到
+                    state_list[index] = state[char]  # 更新，进入字典下一层
                     temp_match_list[index]["match"] += char
                     temp_match_list[index]["length"] += 1
 
-                    if state[char]["is_end"]:
+                    if state[char]["is_end"]:   # 如果更新后是字典最后一层，匹配完成
                         match_list.append(copy.deepcopy(temp_match_list[index]))
-
-                        if len(state[char].keys()) == 1:
-                            state_list.pop(index)
+                        # 提前执行pop操作，减少后面的content匹配所需时间
+                        if len(state[char].keys()) == 1:    # 个人感觉这层判断可以不要，因为已经通过了is_end=True的判断了，此时
+                            state_list.pop(index)           # len(state[char].keys())返回值一定为1
                             temp_match_list.pop(index)
-                else:
-                    state_list.pop(index)
+                else:   # 字典中没有查询到char，将会把state_list中不匹配的字典pop出，同时temp_match_list也将pop出内容
+                    state_list.pop(index)   # 若state_list为空，enumerate处理之后pop不会有反应
                     temp_match_list.pop(index)
 
         return match_list
