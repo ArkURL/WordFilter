@@ -11,7 +11,7 @@ def fun():
 
 
 # 从txt文件中读取多行数据并转换为列表
-def read_multiple_lines_from_txt(path_to_file:str='.\\text.txt') -> list:
+def read_multiple_lines_from_txt(path_to_file: str = '.\\text.txt') -> list:
     with open(path_to_file, 'r', encoding='utf-8') as f:
         total_list = []
         for each_str in f.readlines():
@@ -22,7 +22,7 @@ def read_multiple_lines_from_txt(path_to_file:str='.\\text.txt') -> list:
 
 
 # 从txt文件读取单行数据并转换为列表
-def read_single_line_from_txt(path_to_file:str='.\\text.txt') -> list:
+def read_single_line_from_txt(path_to_file: str = '.\\text.txt') -> list:
     with open(path_to_file, 'r', encoding='utf-8') as f:
         s = f.read()
         keyword_list = s.split(',')
