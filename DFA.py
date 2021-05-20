@@ -35,6 +35,7 @@ class DFA:
                         if len(state[char].keys()) == 1:    # 个人感觉这层判断可以不要，因为已经通过了is_end=True的判断了，此时
                             state_list.pop(index)           # len(state[char].keys())返回值一定为1
                             temp_match_list.pop(index)
+                    # 相应的，如果state[char]["is_end"]==False,则将等待下一个char的匹配
                 else:   # 字典中没有查询到char，将会把state_list中不匹配的字典pop出，同时temp_match_list也将pop出内容
                     state_list.pop(index)   # 若state_list为空，enumerate处理之后pop不会有反应
                     temp_match_list.pop(index)
