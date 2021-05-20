@@ -9,14 +9,14 @@ class DFA:
     def __init__(self, keyword_list: list):
         self.state_event_dict = self._generate_state_event_dict(keyword_list)
 
-    def match(self, state_event_dict: dict, content: str):
+    def match(self, content: str):
         match_list = []
         state_list = []
         temp_match_list = []
 
         for char_pos, char in enumerate(content):
-            if char in state_event_dict:
-                state_list.append(state_event_dict)
+            if char in self.state_event_dict:
+                state_list.append(self.state_event_dict)
                 temp_match_list.append({
                     "start": char_pos,
                     "match": "",
