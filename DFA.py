@@ -29,13 +29,14 @@ class DFA:
                     temp_match_list[index]["match"] += char
                     temp_match_list[index]["length"] += 1
 
-                    if state[char]["is_end"]:   # 如果更新后是字典最后一层，匹配完成
+                    if state[char]["is_end"]:   # 如果更新后是字典最后一层，匹配完成（若存在包含关系，则最短关键字首先匹配成功）
                         match_list.append(copy.deepcopy(temp_match_list[index]))
                         # 提前执行pop操作，减少后面的content匹配所需时间
-                        if len(state[char].keys()) == 1:    # 个人感觉这层判断可以不要，因为已经通过了is_end=True的判断了，此时
-                            state_list.pop(index)           # len(state[char].keys())返回值一定为1
-                            temp_match_list.pop(index)
+                        if len(state[char].keys()) == 1:    # keywords_list中的关键词可能存在包含关系，比如‘自动’与‘自动机’
+                            state_list.pop(index)           # 为了避免碰到‘自动’就结束匹配，需要多加一层判断
+                            temp_match_list.pop(index)      # 存在包含关系的关键字最终会根据较长的关键字生成hash_map
                     # 相应的，如果state[char]["is_end"]==False,则将等待下一个char的匹配
+                    # 若存在关键字交叉在content中出现，意味着先出现的关键字匹配失败，在这个enumerate(state_list)循环中将进入else语句并被pop出
                 else:   # 字典中没有查询到char，将会把state_list中不匹配的字典pop出，同时temp_match_list也将pop出内容
                     state_list.pop(index)   # 若state_list为空，enumerate处理之后pop不会有反应
                     temp_match_list.pop(index)
@@ -45,7 +46,7 @@ class DFA:
     @staticmethod
     def _generate_state_event_dict(keyword_list: list) -> dict:
         state_event_dict = {}
-
+        # 如果存在一个关键词包含另一个关键词的情况，将返回一个以最长关键词为标准的字典，且较短关键词处的is_end为True
         for keyword in keyword_list:
             current_dict = state_event_dict
             length = len(keyword)
