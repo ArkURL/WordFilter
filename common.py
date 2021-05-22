@@ -41,6 +41,13 @@ def save_dfa_object(dfa_object, output_file_path: str = '.\\dfa_object.pik') -> 
         pik.dump(dfa_object, f)
 
 
+#
+def load_dfa_object(input_file_path: str = '.\\dfa_object.pik'):
+    with open(input_file_path, 'rb') as f:
+        dfa_object = pik.load(f)
+    return dfa_object
+
+
 # 从外部文件加载content文本
 def load_content(path_to_content: str = '.\\content.txt') -> str:
     with open(path_to_content, 'r', encoding='utf-8') as f:
