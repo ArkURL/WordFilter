@@ -41,7 +41,7 @@ def save_dfa_object(dfa_object, output_file_path: str = '.\\dfa_object.pik') -> 
         pik.dump(dfa_object, f)
 
 
-#
+# 读取dfa对象
 def load_dfa_object(input_file_path: str = '.\\dfa_object.pik'):
     with open(input_file_path, 'rb') as f:
         dfa_object = pik.load(f)
