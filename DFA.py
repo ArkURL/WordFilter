@@ -24,12 +24,26 @@ class DFA:
                 })
 
             for index, state in enumerate(state_list):
-                if char in state:  # 如果在字典中查到
-                    state_list[index] = state[char]  # 更新，进入字典下一层
+                is_find = False
+                state_char = None
+
+                # 遇到通配符"*"，直接更新
+                if "*" in state:
+                    state_list[index] = state["*"]      # 更新，进入字典下一层
+                    state_char = "*"
+                    is_find = True
+
+                # 遇到通配符就不用再查了
+                elif char in state:  # 如果在字典中查到当前字符
+                    state_list[index] = state[char]     # 更新，进入字典下一层
+                    state_char = char
+                    is_find = True
+
+                if is_find:
                     temp_match_list[index]["match"] += char
                     temp_match_list[index]["length"] += 1
 
-                    if state[char]["is_end"]:   # 如果更新后是字典最后一层，匹配完成（若存在包含关系，则最短关键字首先匹配成功）
+                    if state[state_char]["is_end"]:   # 如果更新后是字典最后一层，匹配完成（若存在包含关系，则最短关键字首先匹配成功）
                         match_list.append(copy.deepcopy(temp_match_list[index]))
                         # 提前执行pop操作，减少后面的content匹配所需时间
                         if len(state[char].keys()) == 1:    # keywords_list中的关键词可能存在包含关系，比如‘自动’与‘自动机’
