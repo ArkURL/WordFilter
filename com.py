@@ -11,7 +11,7 @@ def fun():
 
 
 # 从txt文件中读取多行数据并转换为列表
-def read_multiple_lines_from_txt(path_to_file: str = '.\\keywords.txt') -> list:
+def read_multiple_lines_from_txt(path_to_file: str = '.\\input\\keywords.txt') -> list:
     with open(path_to_file, 'r', encoding='utf-8') as f:
         total_list = []
         for each_str in f.readlines():
@@ -22,7 +22,7 @@ def read_multiple_lines_from_txt(path_to_file: str = '.\\keywords.txt') -> list:
 
 
 # 从txt文件读取单行数据并转换为列表
-def read_single_line_from_txt(path_to_file: str = '.\\keywords.txt') -> list:
+def read_single_line_from_txt(path_to_file: str = '.\\input\\keywords.txt') -> list:
     with open(path_to_file, 'r', encoding='utf-8') as f:
         s = f.read()
         keyword_list = s.split(',')
@@ -30,26 +30,26 @@ def read_single_line_from_txt(path_to_file: str = '.\\keywords.txt') -> list:
 
 
 # 保存制作好的HashMap
-def save_hash_map(hash_map_list: list, output_file_path: str = '.\\hashmap.json') -> None:
+def save_hash_map(hash_map_list: list, output_file_path: str = '.\\output\\hashmap.json') -> None:
     with open(output_file_path, 'w', encoding='utf-8') as f:
         f.write(json.dumps(hash_map_list))
 
 
 # 保存dfa对象
-def save_dfa_object(dfa_object, output_file_path: str = '.\\dfa_object.pik') -> None:
+def save_dfa_object(dfa_object, output_file_path: str = '.\\obj\\dfa_object.pik') -> None:
     with open(output_file_path, 'wb+') as f:
         pik.dump(dfa_object, f)
 
 
 # 读取dfa对象
-def load_dfa_object(input_file_path: str = '.\\dfa_object.pik'):
+def load_dfa_object(input_file_path: str = '.\\obj\\dfa_object.pik'):
     with open(input_file_path, 'rb') as f:
         dfa_object = pik.load(f)
     return dfa_object
 
 
 # 从外部文件加载content文本
-def load_content(path_to_content: str = '.\\content.txt') -> str:
+def load_content(path_to_content: str = '.\\input\\content.txt') -> str:
     with open(path_to_content, 'r', encoding='utf-8') as f:
         content = f.read()
         return content
